@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+    body {
+        margin: 0;
+    }
+
+    .house {
+        width: 25%;
+        margin-bottom: 20px;
+    }
+
+    .outlets .outlet {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        border-bottom: 1px solid;
+        width: max-content;
+    }
+
+    .houses {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+
+    .house {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    .house_id,
+    .house_name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .outlet {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-top: 5px;
+    }
+
+    .outlet .name,
+    .outlet .power,
+    .outlet .consumption {
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .average,
+    .max,
+    .min {
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+<body>
+
+<div class="houses">
+    {% for house in houses %}
+
+        <div class="house">
+            <div class="house_id">
+                House id: <span>{{ house.id }}</span>
+            </div>
+            <div class="house_name">
+                House name: <span>{{ house.name }}</span>
+            </div>
+            {% if house.outlets.all %}
+            <div class="outlets">
+                Outlets:
+                {% for outlet in house.outlets.all %}
+                    <div class="outlet">
+                        <span class="name">Name: {{ outlet }}</span>
+                        <span class="power">Power: {{ outlet.power }}V</span>
+                        <span class="consumption">Consumption: {{ outlet.electricity_consumption }}W</span>
+                    </div>
+                {% endfor %}
+            </div>
+                <div class="average">
+                    Average consumption: <span>0</span>
+                </div>
+                <div class="max">
+                    Max consumption: <span>0</span>
+                </div>
+                <div class="min">
+                    Min consumption: <span>0</span>
+                </div>
+            {% endif %}
+        </div>
+
+    {% endfor %}
+</div>
+
+<script src="{% static 'main.js'%}"></script>
+
+</body>
+</html>
