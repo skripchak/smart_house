@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+
 </head>
 
 <style>
@@ -11,95 +13,82 @@
         margin: 0;
     }
 
-    .house {
-        width: 25%;
-        margin-bottom: 20px;
-    }
-
-    .outlets .outlet {
-        display: flex;
-        flex-direction: column;
-        margin-left: 10px;
-        border-bottom: 1px solid;
-        width: max-content;
-    }
-
-    .houses {
-        display: flex;
-        flex-direction: row;
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
     }
 
-    .house {
-        border: 1px solid #ccc;
-        padding: 10px;
+    .grid-item {
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .house_id,
-    .house_name {
+    .room-link {
+        text-decoration: none;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .room {
         font-weight: bold;
-        margin-bottom: 5px;
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 
-    .outlet {
-        border: 1px solid #ccc;
-        padding: 5px;
-        margin-top: 5px;
+    .statistics-button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
     }
 
-    .outlet .name,
-    .outlet .power,
-    .outlet .consumption {
-        display: block;
-        margin-bottom: 3px;
+    .statistics-button:hover {
+        background-color: #45a049;
     }
 
-    .average,
-    .max,
-    .min {
-        font-weight: bold;
-        margin-top: 10px;
+    .statistics-button:focus {
+        outline: none;
     }
+
+    .title {
+        display: flex;
+        justify-content: center;
+    }
+
+    section.houses {
+        padding: 0 30px;
+    }
+
 </style>
 <body>
 
-<div class="houses">
-    {% for house in houses %}
-
-        <div class="house">
-            <div class="house_id">
-                House id: <span>{{ house.id }}</span>
-            </div>
-            <div class="house_name">
-                House name: <span>{{ house.name }}</span>
-            </div>
-            {% if house.outlets.all %}
-            <div class="outlets">
-                Outlets:
-                {% for outlet in house.outlets.all %}
-                    <div class="outlet">
-                        <span class="name">Name: {{ outlet }}</span>
-                        <span class="power">Power: {{ outlet.power }}V</span>
-                        <span class="consumption">Consumption: {{ outlet.electricity_consumption }}W</span>
+<section class="houses">
+    <div class="title">
+        <h2>Choose your house</h2>
+    </div>
+    <div class="grid-container">
+        {% for house in  houses %}
+            <div class="grid-item">
+                <a href="/house/{{ house.id }}/rooms" class="room-link">
+                    <div class="room">{{ house.name }}</div>
+                    <div class="button-container">
+                        <button class="statistics-button">Statistics</button>
                     </div>
-                {% endfor %}
+                </a>
             </div>
-                <div class="average">
-                    Average consumption: <span>0</span>
-                </div>
-                <div class="max">
-                    Max consumption: <span>0</span>
-                </div>
-                <div class="min">
-                    Min consumption: <span>0</span>
-                </div>
-            {% endif %}
-        </div>
-
-    {% endfor %}
-</div>
-
-<script src="{% static 'main.js'%}"></script>
+        {% endfor %}
+    </div>
+</section>
 
 </body>
 </html>

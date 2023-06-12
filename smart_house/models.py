@@ -9,11 +9,19 @@ class House(models.Model):
         return self.name
 
 
+class Room(models.Model):
+    # id = models.AutoField(primary_key=False)
+    name = models.CharField(max_length=200)
+    house = models.ForeignKey(House, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} in {self.house.name}"
+
+
 class Outlet(models.Model):
-    house = models.ForeignKey(House, on_delete=models.CASCADE, related_name='outlets')
     name = models.CharField(max_length=100)
-    power = models.IntegerField()
-    electricity_consumption = models.IntegerField() #ват в час
+    electricity_consumption = models.IntegerField()
+    outlet = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section class="house">
+    <div class="houses">
+        <div class="house">
+            <div class="house_id">
+                House id: <span>{{ house.id }}</span>
+            </div>
+            <div class="house_name">
+                House name: <span>{{ house.name }}</span>
+            </div>
+
+            Outlets:
+            {% for outlet in outlets %}
+                <div class="outlet">
+                    <div class="name">Name: <span>{{ outlet.name }}</span></div>
+                    <div class="consumption">Consumption: <span>{{ outlet.electricity_consumption }}</span></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</body>
+</html>
